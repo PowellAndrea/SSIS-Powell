@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="61"
-  DTS:VersionGUID="{F0347A74-BD69-44FD-964B-F1B21CED5647}">
+  DTS:VersionBuild="68"
+  DTS:VersionGUID="{1A5A09AC-095E-494F-AF9D-BEC84D4E4932}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -60,7 +60,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{183B32D9-64C2-4802-B852-9D23BD13C663}"
-          SQLTask:SqlStatementSource="USE SSISCustomers;&#xA;GO&#xA;&#xA;&#xA;BULK INSERT [dbo].[ImportTable] &#xA;FROM 'C:\SQL\SSIS\customers.csv' &#xA;WITH ( &#xA;    FIRSTROW = 2, &#xA;&#xA;    ROWTERMINATOR = '\n' &#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="USE SSISCustomers;&#xA;GO&#xA;&#xA;IF OBJECT_ID('dbo.ImportTable','U') IS NOT NULL&#xA;  DROP TABLE [dbo].[ImportTable];&#xA;GO&#xA;&#xA;CREATE TABLE ImportTable(&#xA;&#x9;Title varchar(50) NULL,&#xA;&#x9;FirstName varchar(50) NULL,&#xA;&#x9;MiddleName varchar(50) NULL,&#xA;&#x9;LastName varchar(50) NULL,&#xA;&#x9;Suffix varchar (50) NULL&#xA;);&#xA;GO&#xA;&#xA;BULK INSERT [dbo].[ImportTable] &#xA;FROM 'C:\SQL\SSIS\customers.csv' &#xA;WITH ( &#xA;    FIRSTROW = 2, &#xA;    FIELDTERMINATOR=',',&#xA;&#xA;    ROWTERMINATOR = '\n' &#xA;)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -643,7 +643,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[Customers]</property>
+                  name="OpenRowset">[dbo].[Customer_Followup]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -739,6 +739,14 @@
                       cachedName="FullName"
                       externalMetadataColumnId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
                       lineageId="Package\Load Customers\FixUniCode.Outputs[Data Conversion Output].Columns[FullName]" />
+                    <inputColumn
+                      refId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].Columns[Suffix]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Suffix"
+                      externalMetadataColumnId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      lineageId="Package\Load Customers\FixUniCode.Outputs[Data Conversion Output].Columns[Suffix]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -776,6 +784,12 @@
                       refId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
                       dataType="i4"
                       name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Suffix" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2093,13 +2107,6 @@
           Size="196,40"
           Id="a872220c-e9c1-440b-a97e-82fc0aadce66"
           TopLeft="237,209" />
-        <AnnotationLayout
-          Text="USE SSISCustomers;&#xA;GO&#xA;&#xA;IF OBJECT_ID('dbo.Customers','U') IS NOT NULL&#xA; DROP TABLE [dbo].[Customers];&#xA;GO&#xA;&#xA;IF OBJECT_ID('dbo.Customer_Followup','U') IS NOT NULL&#xA; DROP TABLE [dbo].[Customer_Followup];&#xA;GO&#xA;&#xA;&#xA;CREATE TABLE Customers(&#xA; Id [INT] IDENTITY(1,1) NOT NULL,&#xA; FullName varchar(100) NOT NULL,&#xA; FirstName varchar(50) NOT NULL,&#xA; LastName varchar(50) NOT NULL,&#xA; MiddleName varchar(50) NULL,&#xA; Title varchar(50) NULL&#xA;);&#xA;&#xA;CREATE TABLE Customer_Followup(&#xA; Id INT IDENTITY(1,1) NOT NULL,&#xA; FullName varchar(100) NOT NULL,&#xA; FirstName varchar(50) NOT NULL,&#xA; LastName varchar(50) NOT NULL,&#xA; MiddleName varchar(50) NULL,&#xA; Title varchar(50) NULL,&#xA; Suffix varchar(10) NULL&#xA;);&#xA;&#xA;&#xA;&#xA;"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="327,567"
-          Id="3530264d-b887-4e34-93a4-c3d8ca3ee851"
-          TopLeft="699,51" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -2168,7 +2175,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="9.79640624999995,5,30.9071875,9.568359375"
+              BoundingBox="-11.3412304687501,5,73.1824609375,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2204,7 +2211,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-64.1908072916666,32.2607449856733,37.04828125,9.7978515625"
+              BoundingBox="-96.5300260416666,32.2607449856733,101.72671875,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2228,7 +2235,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-17.69296875,10.87548828125,35.3859375,9.7490234375"
+              BoundingBox="-40.433359375,9.9453125,80.86671875,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2264,7 +2271,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="27.0025260416666,31.4469914040114,41.32828125,9.7978515625"
+              BoundingBox="4.36830729166665,31.4469914040114,86.59671875,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2288,7 +2295,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-22.48796875,15.87548828125,44.9759375,9.7490234375"
+              BoundingBox="-54.933359375,14.9453125,109.86671875,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2311,7 +2318,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-14.78947265625,5,55.0789453125,11.228515625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2345,7 +2354,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-22.78947265625,29.5,55.0789453125,11.228515625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
@@ -2383,7 +2394,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="3.96052734374999,-17.228515625,55.0789453125,11.228515625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2418,7 +2431,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-2.84796875,-15.7490234375,40.6959375,9.7490234375"
+              BoundingBox="-32.563359375,-17.609375,100.12671875,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2453,7 +2466,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="47.5438606770833,-4.33663366336633,55.0789453125,11.228515625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
@@ -2491,7 +2506,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-21.78947265625,28,55.0789453125,11.228515625"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2526,7 +2543,7 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="3.44703125,-15.7490234375,31.1059375,9.7490234375"
+              BoundingBox="-28.998359375,-17.609375,95.99671875,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2561,7 +2578,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="11.0646099125573,1,35.6689453125,9.568359375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
