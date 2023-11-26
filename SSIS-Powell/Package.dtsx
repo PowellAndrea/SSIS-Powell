@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="58"
-  DTS:VersionGUID="{B2686064-ADF9-420C-A300-CC1A9E53F0FC}">
+  DTS:VersionBuild="61"
+  DTS:VersionGUID="{F0347A74-BD69-44FD-964B-F1B21CED5647}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -60,7 +60,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{183B32D9-64C2-4802-B852-9D23BD13C663}"
-          SQLTask:SqlStatementSource="USE SSISCustomers;&#xA;GO&#xA;&#xA;IF OBJECT_ID(ImportTable,'U') IS NOT NULL&#xA;  DROP TABLE [dbo].[ImportTable];&#xA;GO&#xA;&#xA;&#xA;CREATE TABLE ImportTable(&#xA;Title varchar(50) NULL,&#xA;FirstName varchar(50),&#xA;MiddleName varchar(50),&#xA;LastName varchar(50),&#xA;Suffix varchar(50)&#xA;)&#xA;&#xA;BULK INSERT [dbo].[ImportTable] &#xA;FROM 'C:\SQL\SSIS\customers.csv' &#xA;WITH ( &#xA;    FIRSTROW = 2, &#xA;&#xA;    ROWTERMINATOR = '\n' &#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="USE SSISCustomers;&#xA;GO&#xA;&#xA;&#xA;BULK INSERT [dbo].[ImportTable] &#xA;FROM 'C:\SQL\SSIS\customers.csv' &#xA;WITH ( &#xA;    FIRSTROW = 2, &#xA;&#xA;    ROWTERMINATOR = '\n' &#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -558,7 +558,7 @@
                       refId="Package\Load Customers\CustomerTable.Inputs[OLE DB Destination Input].Columns[FullName]"
                       cachedCodepage="1252"
                       cachedDataType="str"
-                      cachedLength="102"
+                      cachedLength="100"
                       cachedName="FullName"
                       externalMetadataColumnId="Package\Load Customers\CustomerTable.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
                       lineageId="Package\Load Customers\FixUniCode.Outputs[Data Conversion Output].Columns[FullName]" />
@@ -593,7 +593,7 @@
                       refId="Package\Load Customers\CustomerTable.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
                       codePage="1252"
                       dataType="str"
-                      length="100"
+                      length="102"
                       name="FullName" />
                     <externalMetadataColumn
                       refId="Package\Load Customers\CustomerTable.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
@@ -735,7 +735,7 @@
                       refId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].Columns[FullName]"
                       cachedCodepage="1252"
                       cachedDataType="str"
-                      cachedLength="102"
+                      cachedLength="100"
                       cachedName="FullName"
                       externalMetadataColumnId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
                       lineageId="Package\Load Customers\FixUniCode.Outputs[Data Conversion Output].Columns[FullName]" />
@@ -770,7 +770,7 @@
                       refId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
                       codePage="1252"
                       dataType="str"
-                      length="100"
+                      length="102"
                       name="FullName" />
                     <externalMetadataColumn
                       refId="Package\Load Customers\Customer_FollowupTable.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
@@ -1060,7 +1060,7 @@
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      length="102"
+                      length="100"
                       lineageId="Package\Load Customers\FixUniCode.Outputs[Data Conversion Output].Columns[FullName]"
                       name="FullName"
                       truncationRowDisposition="FailComponent">
@@ -2167,7 +2167,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="9.79640624999995,5,30.9071875,9.568359375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
